@@ -165,7 +165,7 @@ class SavedTexts extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            initState();
+            loadNotes;
           },
           child: const Text('Go back!'),
         ),
@@ -173,7 +173,7 @@ class SavedTexts extends StatelessWidget {
     );
   }
 
-  void initState() async {
+  void loadNotes() async {
     _allnotes = await SQLHelper.getItems();
   }
 }
