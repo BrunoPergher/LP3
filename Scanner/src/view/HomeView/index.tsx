@@ -25,13 +25,13 @@ export default function HomeView() {
 
       {menu && (
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate("HomeView")}>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeView')}>
             <TextInfo>Sobre</TextInfo>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("ScannerView")}>
+          <TouchableOpacity onPress={() => navigation.navigate('ScannerView')}>
             <TextInfo>Scanner</TextInfo>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("SaveView")}>
+          <TouchableOpacity onPress={() => navigation.navigate('SaveView')}>
             <TextInfo>Salvos</TextInfo>
           </TouchableOpacity>
         </View>

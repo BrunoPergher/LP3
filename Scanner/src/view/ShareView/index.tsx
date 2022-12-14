@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, ScrollView, TouchableOpacity, View} from 'react-native';
+import {Alert, Button, ScrollView, Share, TouchableOpacity, View} from 'react-native';
 import logo from '../../assets/images/logo.png';
 import {navigationNoPrivate} from '../../libs/navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,23 +13,26 @@ import {
   TextSlogan,
 } from './styles';
 
-export default function SaveView() {
+export default function ShareView() {
   const navigation = navigationNoPrivate();
-  const [loading, setLoading] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false);
-  const [codebar, setCodebar] = useState<string>('');
 
-  useEffect(() => {
-    getAsyncStorage();
-  }, []);
-
-  async function getAsyncStorage() {
-    let qrcodeee = await AsyncStorage.getItem('device_token');
-    console.log(qrcodeee);
-    if (qrcodeee) {
-      setCodebar(qrcodeee);
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'Baixe agora o melhor aplicativo de Scanner!',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+        } else {
+        }
+      } else if (result.action === Share.dismissedAction) {
+      }
+    } catch (error) {
+      Alert.alert(error?.message);
     }
-  }
+  };
 
   return (
     <Container>
@@ -45,23 +48,15 @@ export default function SaveView() {
           <TouchableOpacity onPress={() => navigation.navigate('ScannerView')}>
             <TextInfo>Scanner</TextInfo>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('SaveView')}>
+          <TouchableOpacity onPress={() => navigation.navigate('ScannerView')}>
             <TextInfo>Salvos</TextInfo>
           </TouchableOpacity>
         </View>
       )}
 
-      <ScrollView>
         <Content>
-          <ContainerLogo>
-            <Logo source={logo} resizeMode={'contain'} />
-          </ContainerLogo>
-
-          <TextSlogan>Scanner - Salvo</TextSlogan>
-
-          <TextSlogan>Ultimo qrcode salvo: {'\n'} {codebar}</TextSlogan>
+        <Button onPress={onShare} title="Share" />
         </Content>
-      </ScrollView>
     </Container>
   );
 }
